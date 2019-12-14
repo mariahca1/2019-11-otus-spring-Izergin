@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- TODO: определите бин класса ru.otus.spring.dao.PersonDaoSimple -->
+    <bean id="personDao" class="ru.otus.spring.dao.PersonDaoSimple">
+        <property name="defaultAge" value="28"/>
+    </bean>
+
+    <!-- TODO: определите бин класса ru.otus.spring.PersonServiceImpl -->
+    <bean id="personService" class="ru.otus.spring.service.PersonServiceImpl">
+        <constructor-arg name="dao" ref="personDao"/> <!--  injection через конструктор -->
+        <!--   <property name="dao" ref="personDao"/>-->  <!--  имя setter-а без префикса set  с маленькой буквы -->
+    </bean>
+
+    <bean id="myCsvLoader" class="ru.otus.spring.service.MyCsvLoader">
+        <constructor-arg  index="0" value="classpath:questions.csv"/>  <!--injection через конструктор -->
+    </bean>
+
+</beans>
