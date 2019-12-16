@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.core.io.Resource;
 
 @AllArgsConstructor
-public class MyCsvLoader {
+public class MyResourceLoader {
     @Getter
     private Resource res;
 }

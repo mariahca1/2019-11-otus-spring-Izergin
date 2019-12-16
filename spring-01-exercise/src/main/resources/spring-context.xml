@@ -4,19 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- TODO: определите бин класса ru.otus.spring.dao.PersonDaoSimple -->
-    <bean id="personDao" class="ru.otus.spring.dao.PersonDaoSimple">
-        <property name="defaultAge" value="28"/>
+    <bean id="myResourceLoader" class="ru.otus.spring.service.MyResourceLoader">
+        <constructor-arg  index="0" value="classpath:questions.csv"/>
     </bean>
 
-    <!-- TODO: определите бин класса ru.otus.spring.PersonServiceImpl -->
-    <bean id="personService" class="ru.otus.spring.service.PersonServiceImpl">
-        <constructor-arg name="dao" ref="personDao"/> <!--  injection через конструктор -->
-        <!--   <property name="dao" ref="personDao"/>-->  <!--  имя setter-а без префикса set  с маленькой буквы -->
-    </bean>
-
-    <bean id="myCsvLoader" class="ru.otus.spring.service.MyCsvLoader">
-        <constructor-arg  index="0" value="classpath:questions.csv"/>  <!--injection через конструктор -->
+    <bean id="examination" class="ru.otus.spring.service.Examination">
+        <constructor-arg name="loader" ref="myResourceLoader"></constructor-arg>
     </bean>
 
 </beans>
