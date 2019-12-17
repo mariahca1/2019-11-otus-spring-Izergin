@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Question {
-    public String questionNumber;
-    public String question;
+    private String questionNumber;
+    private String question;
     private String answer1;
     private String answer2;
     private String answer3;

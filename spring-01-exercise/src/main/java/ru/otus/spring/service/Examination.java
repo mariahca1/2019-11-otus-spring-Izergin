@@ -10,7 +10,7 @@ import java.util.*;
 
 @AllArgsConstructor
 public class Examination {
-    public MyResourceLoader loader;
+    private MyResourceLoader loader;
 
     public void start() {
         Resource res = loader.getRes();
@@ -44,7 +44,7 @@ public class Examination {
             int rightAnswers = 0;
             for (Question e : questionsList) {
                 //Начинаем задавать вопросы
-                System.out.println(e.question);
+                System.out.println(e.getQuestion());
                 String answer = br.readLine();
                 if (answer.equals(e.getTrueAnswer())) {
                     System.out.println("You are right");
