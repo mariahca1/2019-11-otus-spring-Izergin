@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.bean.CsvToBean;
 import au.com.bytecode.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
+import ru.otus.spring.junit.domain.Person;
 
 import java.io.*;
 import java.util.*;
@@ -39,21 +40,15 @@ public class Examination {
             //познакомимся с пользователем
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("What is your name?");
-            String userName = br.readLine();
+            Person person = new Person(br.readLine());
+
             int questionsCnt = questionsList.size();
             int rightAnswers = 0;
             for (Question e : questionsList) {
                 //Начинаем задавать вопросы
-                System.out.println(e.getQuestion());
-                String answer = br.readLine();
-                if (answer.equals(e.getTrueAnswer())) {
-                    System.out.println("You are right");
-                    rightAnswers++;
-                } else {
-                    System.out.println("You are wrong");
-                }
+                rightAnswers += e.ask();
             }
-            System.out.println("You (" + userName + ") got " + rightAnswers + " out of " + questionsCnt +" questions!");
+            System.out.println("You (" + person.getName() + ") got " + rightAnswers + " out of " + questionsCnt +" questions!");
         } catch (Exception e) {
             System.out.println(e.fillInStackTrace());
         }
