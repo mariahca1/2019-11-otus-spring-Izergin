@@ -1,4 +1,4 @@
-package ru.otus.spring.junit.domain;
+package ru.otus.spring.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
