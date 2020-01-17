@@ -1,8 +1,8 @@
 package ru.otus.spring;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import ru.otus.spring.component.LocaleHolder;
 import ru.otus.spring.controller.ExamController;
 import ru.otus.spring.domain.Person;
@@ -12,27 +12,38 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 
-@ComponentScan
-@Configuration
-public class Main {
+
+@SpringBootApplication
+public class Application {
+
     private static LocaleHolder lh;
     private static Person person;
 
     public static void main(String[] args) {
-        //познакомимся с пользователем
-        person = new Person("Igor");
+        ApplicationContext context = SpringApplication.run(Application.class, args);
+
+        person = new Person("Igor", 18);
+        person.birthday();
 
         askStudentForLocale();
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         lh = context.getBean(LocaleHolder.class);
 
         System.out.println(lh.getMessage("hello.user", new String[]{person.getName()}, Locale.getDefault()));
 
         ExamController ec = context.getBean(ExamController.class);
-        List<Question> qList = ec.getQuestionsByExamName("math");
-        //List<Question> qList = ec.getQuestionsByExamName("biology");
+        List<Question> qList;
+        try {
+//            qList = ec.getQuestionsByExamName("math");
+            qList = ec.getQuestionsByExamName("biology");
+        } catch (NoSuchElementException e)
+        {
+            System.out.println("Данный экзамен не поддерживается");
+            System.out.println(lh.getMessage ("main.examNotSupported", new String[]{}, Locale.getDefault()));
+            return;
+        }
         if (qList == null) {
             return;
         }
@@ -74,11 +85,9 @@ public class Main {
         try {
             String answer = br.readLine();
             if (answer.equals(question.getTrueAnswer())) {
-                //System.out.println("You are right");
                 System.out.println(lh.getMessage("exams.answer.right", null, Locale.getDefault()));
                 res = 1;
             } else {
-                //System.out.println("You are wrong");
                 System.out.println(lh.getMessage("exams.answer.wrong", null, Locale.getDefault()));
                 res = 0;
             }
@@ -88,5 +97,4 @@ public class Main {
         }
         return res;
     }
-
 }
