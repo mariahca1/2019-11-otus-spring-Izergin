@@ -1,0 +1,10 @@
+exams:
+    list: math, biology
+#exams.math.question-source = csv
+    source-type:
+      math: csv
+#exams.math.question-source = db
+    math:
+      csvquestionssource: /questionsMath.csv
+      passPercents: 50
+#exams.math.name = maths

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ExamQuestions {
     //геттеров и сеттеров в сервисе и в дао быть не должно
-    List<Question> getQuestionsByFilePath(String examName);
+    List<Question> getQuestionsByExamName(String examName);
 }
