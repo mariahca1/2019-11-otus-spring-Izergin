@@ -1,6 +1,10 @@
+spring:
+  shell:
+    interactive:
+      enabled: false
 exams:
   exam-list:
-    - name: math
+    - name: testMath
       source-type: csv
       csv-question-source: /questionsMath.csv
       pass-percent: 50
