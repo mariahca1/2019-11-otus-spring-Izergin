@@ -1,8 +1,12 @@
 package ru.otus.spring.dao;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import ru.otus.spring.component.CsvQuestionLoader;
 import ru.otus.spring.domain.Question;
 
@@ -11,28 +15,30 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 @DisplayName("Класс ExamQuestionsFileDao")
+@SpringBootTest
 public class ExamQuestionsFileDaoTest {
-
-    private CsvQuestionLoader loader = mock(CsvQuestionLoader.class);
-    private ExamQuestions examQuestions;
-
-    @BeforeEach
-    void init() {
-        examQuestions = new ExamQuestionsFileDao(loader);
+    @Configuration
+    @ComponentScan("ru.otus.spring.dao")
+    static class TestConfig {
     }
+
+    @MockBean
+    private CsvQuestionLoader csvQuestionLoader;
+
+    @Autowired
+    private ExamQuestionsFileDao examQuestionsFileDao;
 
     @DisplayName("Возвращает список вопросов корректно")
     @Test
     void testCorrectAnswer() {
         Question q = new Question("1", "question", "ans1", "ans2", "ans3", "trueAns");
-        ArrayList<Question> questions = new ArrayList<Question>();
+        ArrayList<Question> questions = new ArrayList<>();
         questions.add(q);
 
-        given(examQuestions.getQuestionsByExamName(any())).willReturn(questions);
-        assertThat(examQuestions.getQuestionsByExamName(any()))
+        given(examQuestionsFileDao.getQuestionsByExamName(any())).willReturn(questions);
+        assertThat(examQuestionsFileDao.getQuestionsByExamName(any()))
                 .isNotEmpty()
                 .hasSize(1)
                 .contains(q)
