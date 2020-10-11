@@ -1,8 +1,10 @@
 package ru.otus.spring.service;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.jline.reader.LineReader;
+//import org.jline.reader.LineReader;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.component.LocaleHolder;
@@ -16,6 +18,7 @@ import java.util.*;
 @Service
 @Setter
 @Getter
+//@AllArgsConstructor
 public class ExamService {
 
     //будем хранить состояние - имя студента
